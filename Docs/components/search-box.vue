@@ -36,16 +36,24 @@
         },
         methods:{
             toChat(data){
-                this.IM.addChatList(data)
+                if(this.getPage==='1'){
+
+                }else{
+                    this.IM.addChatList(data)
+                    this.$store.commit('setPage','1')
+                }
+            },
+            watchChatLists(){
+                this.$nextTick(()=>{
+                    this.chatLists = this.IM.getChatList()
+                    this.IM.watcher.chatList((val)=>{
+                        this.chatLists = val
+                    })
+                })
             }
         },
         mounted() {
-          this.$nextTick(()=>{
-              console.log(this.IM.watcher)
-              this.IM.watcher.chatList((a)=>{
-                  console.log(a)
-              })
-          })
+            this.watchChatLists()
         },
         watch:{
 

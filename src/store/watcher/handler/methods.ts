@@ -28,8 +28,9 @@ export function watchCurrentChat() {
 // todo
 }
 
-export function watchChatList(event:any) {
-    getWatchFN('watchChatList')(event)
+export function watchChatList(val:any) {
+    let newVal = Object.assign({},val)
+    getWatchFN('watchChatList')(newVal)
 }
 
 export function watchUserFriendList() {

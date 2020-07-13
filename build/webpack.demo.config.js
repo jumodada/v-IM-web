@@ -106,6 +106,7 @@ const webpackConfig = {
                     name: path.posix.join('static', '[name].[hash:7].[ext]')
                 }
             }
+
         ]
     },
     plugins: [

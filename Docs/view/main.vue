@@ -16,18 +16,36 @@
         name: "Main",
         components:{slider,boxContent,searchBox},
         mounted() {
+            this.getToken()
             this.IMInit()
             this.getUserData()
         },
+        data(){
+            return {
+                token:''
+            }
+        },
         methods:{
+            getToken(){
+                axios.post('http://127.0.0.1:8080/oauth/token',{
+                    client_id: 'v-client',
+                    client_secret: 'v-client-ppp',
+                    grant_type: 'password',
+                    scope: 'select',
+                    username: 'wangwu',
+                    password: 123456
+                }).then(res=>{
+                    console.log(res)
+                })
+            },
             IMInit(){
-                let ke = new IM('ws://127.0.0.1:9326','908ef1dc-5830-4808-b44a-92adf4b64d80',{friends:{},me:{},groups:{}})
+                let ke = new IM('ws://127.0.0.1:9326','7cd9ba2c-22e7-4df5-ab29-33fbe8e989ed',{friends:{},me:{},groups:{}})
                 this.$store.commit('setIM',ke)
                 ke()
             },
             getUserData(){
                 let data = new FormData()
-                data.append('access_token','908ef1dc-5830-4808-b44a-92adf4b64d80')
+                data.append('access_token','7cd9ba2c-22e7-4df5-ab29-33fbe8e989ed')
                 axios.post('http://127.0.0.1:8080/api/user/init',data).then(res=>{
                     let {data} = res
                     console.log(data)

@@ -55,9 +55,11 @@ const Store = (function () {
     function _unshiftChatLists(data:any) {
         if(!data)return console.error('聊天列表新增的不能为空')
         let copy = JSON.parse(JSON.stringify(state.chatList))
-        let isExist = state.chatList.find(list=>list.id===data.id)
-        if(isExist)return
-        copy.push(data)
+        let idx = state.chatList.findIndex(list=>list.id===data.id)
+        if(idx>-1){
+            copy.splice(idx,1)
+        }
+        copy.unshift(data)
         state.chatList = copy
     }
 
