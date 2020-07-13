@@ -7,6 +7,28 @@ import {ChatListUtils} from "../utils/ChatListUtils"
 
 const Store = (function () {
     let state = initState()
+    let watcherFn = {
+        watchToken:new Function(),
+        watchUser:new Function(),
+        watchWebsocket:new Function(),
+        watchMessageListMap:new Function(),
+        watchChatMap:new Function(),
+        watchMessageList:new Function(),
+        watchCurrentChat:new Function(),
+        watchChatList:new Function(),
+        watchUserFriendList:new Function(),
+        watchFlushTokenTimerId:new Function(),
+        watchChatGroupList:new Function()
+    }
+
+    function getWatchFN(name:string):any{
+        return (watcherFn as any)[name]
+    }
+
+    function setWatchFN(name:string,fn:any):any{
+      (watcherFn as any)[name] = fn
+    }
+
 
     function getStore() {
         return state
@@ -28,6 +50,15 @@ const Store = (function () {
         message.content = transform(message.content)
         state.messageList.push(message)
         ;(state.messageListMap as any)[message.id] = state.messageList
+    }
+
+    function _unshiftChatLists(data:any) {
+        if(!data)return console.error('聊天列表新增的不能为空')
+        let copy = JSON.parse(JSON.stringify(state.chatList))
+        let isExist = state.chatList.find(list=>list.id===data.id)
+        if(isExist)return
+        copy.push(data)
+        state.chatList = copy
     }
 
     function _setUnReadCount(message: IMMessage) {
@@ -151,7 +182,10 @@ const Store = (function () {
         _addMessage,
         _setUnReadCount,
         _addUnreadMessage,
-        _setLastMessage
+        _setLastMessage,
+        _unshiftChatLists,
+        getWatchFN,
+        setWatchFN
     }
 })()
 
@@ -163,3 +197,6 @@ export const addMessage = Store._addMessage
 export const setUnReadCount = Store._setUnReadCount
 export const addUnreadMessage = Store._addUnreadMessage
 export const setLastMessage = Store._setLastMessage
+export const unshiftChatLists = Store._unshiftChatLists
+export const getWatchFN = Store.getWatchFN
+export const setWatchFN = Store.setWatchFN

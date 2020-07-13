@@ -1,3 +1,5 @@
+import {getWatchFN} from "../../index";
+
 export function watchToken() {
 // todo
 }
@@ -26,8 +28,8 @@ export function watchCurrentChat() {
 // todo
 }
 
-export function watchChatList() {
-    // todo
+export function watchChatList(event:any) {
+    getWatchFN('watchChatList')(event)
 }
 
 export function watchUserFriendList() {

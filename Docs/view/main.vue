@@ -16,13 +16,26 @@
         name: "Main",
         components:{slider,boxContent,searchBox},
         mounted() {
-            let ke = new IM('ws://127.0.0.1:9326','5cf756d7-7863-4a76-ba2f-7f382069ce2f',{friends:{},me:{},groups:{}})
-            ke()
-            let data = new FormData()
-            data.append('access_token','5cf756d7-7863-4a76-ba2f-7f382069ce2f')
-            axios.post('http://127.0.0.1:8080/api/user/init',data).then(res=>{
-                console.log(res)
-            })
+            this.IMInit()
+            this.getUserData()
+        },
+        methods:{
+            IMInit(){
+                let ke = new IM('ws://127.0.0.1:9326','908ef1dc-5830-4808-b44a-92adf4b64d80',{friends:{},me:{},groups:{}})
+                this.$store.commit('setIM',ke)
+                ke()
+            },
+            getUserData(){
+                let data = new FormData()
+                data.append('access_token','908ef1dc-5830-4808-b44a-92adf4b64d80')
+                axios.post('http://127.0.0.1:8080/api/user/init',data).then(res=>{
+                    let {data} = res
+                    console.log(data)
+                    this.$store.commit('setFriend',data.friends)
+                    this.$store.commit('setGroups',data.groups)
+                    this.$store.commit('setPage','1')
+                })
+            }
         }
     }
 </script>

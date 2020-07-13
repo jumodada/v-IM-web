@@ -1,13 +1,13 @@
 import {UserInfo} from "../types/user"
-import {updateLocalState, setState} from "../store"
+import {updateLocalState, setState, unshiftChatLists, getState} from "../store"
 import WebsocketBeat from "./websocket"
-
+import watcherAPI from './watcher-api'
 export default class WebsocketIm {
     url: string
     token: string
     userInfo: UserInfo
     ws: any
-
+    watcherAPI:any
     constructor(url: string, token: string, userInfo: UserInfo) {
         this.url = url
         this.token = token
@@ -29,10 +29,16 @@ export default class WebsocketIm {
             _t.ws.create()
         }
     }
+    watcher = watcherAPI
 
-    update() {
-        // todo
+    addChatList(data:any) {
+        unshiftChatLists(data)
     }
+
+    getChatList():any[] {
+       return getState('chatList')
+    }
+
 
     destroyed() {
         // todo

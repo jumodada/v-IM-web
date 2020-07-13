@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content">
     {{getPage}}
     </div>
 </template>
@@ -16,6 +16,8 @@
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    .content{
+        width: 100%;
+    }
 </style>
