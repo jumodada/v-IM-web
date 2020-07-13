@@ -1,7 +1,7 @@
 import {addMessage, addUnreadMessage, getState, setLastMessage, setState, setUnReadCount} from "../../store"
 import {formatDateTime} from "../../utils/formatDateTime"
 
-class WebsocketBeat {
+export default class WebsocketBeat {
     url: string
     ws: any
     pingTimeoutId: any
@@ -12,7 +12,7 @@ class WebsocketBeat {
     reconnectTimeout = 5000
     reconnectDisabled = false
     reconnecting = false
-    pingMsg = '{"code":0"}'
+    pingMsg = '{"code":0}'
 
     constructor(url: string, token: string) {
         this.url = url
@@ -20,7 +20,7 @@ class WebsocketBeat {
     }
 
     onopen() {
-        this.ws.send('{"code":0}"')
+        this.ws.send('{"code":1}')
     }
 
     onReconnect() {
@@ -30,6 +30,7 @@ class WebsocketBeat {
     create() {
         try {
             let URL = this.url + "?token=" + this.token
+            console.log(URL)
             this.ws = new WebSocket(URL)
             this.eventListener()
         } catch (e) {
@@ -40,6 +41,7 @@ class WebsocketBeat {
 
     handleMessage(event: MessageEvent) {
         let data = event.data;
+        console.log(event)
         let sendInfo = JSON.parse(data);
         // 真正的消息类型
         let currentChatID = getState('currentChat').id

@@ -9,7 +9,9 @@
     export default {
         name: "Main",
         mounted() {
-            IM('127.0.0.1','ebf6f243-4c8f-4bef-8b35-c344ddbac76f',{friends:{},me:{},groups:{}})
+            let ke = new IM('ws://127.0.0.1:9326','cde6e6c1-1015-4a72-a60b-a0717048338b',{friends:{},me:{},groups:{}})
+            ke()
+
         }
     }
 </script>

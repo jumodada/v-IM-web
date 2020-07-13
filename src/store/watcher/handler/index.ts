@@ -25,7 +25,7 @@ const keys: any = {
     chatList: watchChatList,
     userFriendList: watchUserFriendList,
     flushTokenTimerId: watchFlushTokenTimerId,
-    chatGroupList: watchChatGroupList,
+    chatGroupList: watchChatGroupList
 }
 export default {
     get(target: any, key: any, receiver: any) {
