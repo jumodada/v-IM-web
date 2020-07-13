@@ -21,7 +21,7 @@ export interface IMMessage {
     avatar: string
     username: string
     fromid: any
-    type:number
+    type:number|string
     id:string
     content:string
 }

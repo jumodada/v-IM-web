@@ -7,29 +7,33 @@ import {ChatListUtils} from "../utils/ChatListUtils"
 
 const Store = (function () {
     let state = initState()
+
     function getStore() {
         return state
     }
 
-    function _getState(key:StateKeys): any {
+    function _getState(key: StateKeys): any {
         return state[key]
     }
+
     function _updateLocalStore() {
-        localStorage.setItem('WEBImSTORE',JSON.stringify(state))
+        localStorage.setItem('WEBImSTORE', JSON.stringify(state))
     }
 
-    function _setState(key:StateKeys,data:any):void {
+    function _setState(key: StateKeys, data: any): void {
         ;(state[key] as any) = data
     }
-    function _addMessage(message:IMMessage) {
+
+    function _addMessage(message: IMMessage) {
         message.content = transform(message.content)
         state.messageList.push(message)
-        ;(state.messageListMap as any)[message.id]  = state.messageList
+        ;(state.messageListMap as any)[message.id] = state.messageList
     }
-    function _setUnReadCount(message:IMMessage) {
+
+    function _setUnReadCount(message: IMMessage) {
         // 未读消息条数
         let tempChatList = []
-        let tempChat:any = {}
+        let tempChat: any = {}
 
         for (let chat of state.chatList) {
             if (
@@ -93,29 +97,50 @@ const Store = (function () {
         ChatListUtils.setChatList(state.user.id, tempChatList)
     }
 
-    function addUnreadMessage(state:any, message:IMMessage) {
-        message.content = transform(message.content);
+    function _addUnreadMessage(message: IMMessage) {
+        message.content = transform(message.content)
         if (message.type === 0) {
             // 从内存中取聊天信息
-            let cacheMessages = state.messageListMap[message.fromid];
+            let cacheMessages = (state.messageListMap as any)[message.fromid]
             if (cacheMessages) {
-                cacheMessages.push(message);
+                cacheMessages.push(message)
             } else {
-                cacheMessages = [];
-                cacheMessages.push(message);
-                state.messageListMap[message.fromid] = cacheMessages;
+                cacheMessages = []
+                cacheMessages.push(message)
+                ;(state.messageListMap as any)[message.fromid] = cacheMessages
             }
         } else {
             // 从内存中取聊天信息
-            let cacheMessages = state.messageListMap[message.id];
+            let cacheMessages = (state.messageListMap as any)[message.id]
             if (cacheMessages) {
-                cacheMessages.push(message);
+                cacheMessages.push(message)
             } else {
-                cacheMessages = [];
-                cacheMessages.push(message);
-                state.messageListMap[message.id] = cacheMessages;
+                cacheMessages = []
+                cacheMessages.push(message)
+                ;(state.messageListMap as any)[message.id] = cacheMessages
             }
         }
+    }
+
+    function _setLastMessage(message:IMMessage) {
+        let list = ChatListUtils.getChatList(state.user.id);
+        let tempChatList = list.map(function (chat:any) {
+            if (
+                String(chat.id) === String(message.fromid) &&
+                message.type === "0"
+            ) {
+                chat.sign = message.content;
+            } else if (
+                String(chat.id) === String(message.id) &&
+                message.type === "1"
+            ) {
+                chat.sign = message.content;
+            }
+            return chat;
+        });
+        // 放入缓存
+        ChatListUtils.setChatList(state.user.id, tempChatList);
+        state.chatList = tempChatList;
     }
 
     return {
@@ -124,7 +149,9 @@ const Store = (function () {
         _setState,
         _updateLocalStore,
         _addMessage,
-        _setUnReadCount
+        _setUnReadCount,
+        _addUnreadMessage,
+        _setLastMessage
     }
 })()
 
@@ -134,3 +161,5 @@ export const setState = Store._setState
 export const updateLocalState = Store._updateLocalStore
 export const addMessage = Store._addMessage
 export const setUnReadCount = Store._setUnReadCount
+export const addUnreadMessage = Store._addUnreadMessage
+export const setLastMessage = Store._setLastMessage

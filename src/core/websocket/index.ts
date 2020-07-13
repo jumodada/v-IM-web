@@ -1,5 +1,5 @@
-import {addMessage, getState, setState, setUnReadCount} from "../../store";
-import {formatDateTime} from "../../utils/formatDateTime";
+import {addMessage, addUnreadMessage, getState, setLastMessage, setState, setUnReadCount} from "../../store"
+import {formatDateTime} from "../../utils/formatDateTime"
 
 class WebsocketBeat {
     url: string
@@ -19,6 +19,14 @@ class WebsocketBeat {
         this.token = token
     }
 
+    onopen() {
+        this.ws.send('{"code":0}"')
+    }
+
+    onReconnect() {
+        console.log("reconnecting...")
+    }
+
     create() {
         try {
             let URL = this.url + "?token=" + this.token
@@ -29,7 +37,8 @@ class WebsocketBeat {
             throw e
         }
     }
-    handleMessage(event:MessageEvent){
+
+    handleMessage(event: MessageEvent) {
         let data = event.data;
         let sendInfo = JSON.parse(data);
         // 真正的消息类型
@@ -47,10 +56,10 @@ class WebsocketBeat {
                 if (
                     String(message.fromid) === String(currentChatID)
                 ) {
-                    addMessage( message)
+                    addMessage(message)
                 } else {
-                    // self.$store.commit("setUnReadCount", message);
-                    // self.$store.commit("addUnreadMessage", message);
+                    setUnReadCount(message)
+                    addUnreadMessage(message)
                 }
             } else if (message.type === 1) {
                 // message.avatar = self.$store.state.chatMap.get(message.id);
@@ -61,36 +70,41 @@ class WebsocketBeat {
                     }
                 } else {
                     setUnReadCount(message)
-                    self.$store.commit("addUnreadMessage", message);
+                    addUnreadMessage(message)
                 }
             }
-            self.$store.commit("setLastMessage", message);
+            setLastMessage(message)
         }
     }
 
     eventListener() {
         this.ws.onclose = () => {
-            // this.onclose();
+            this.close()
             this.reconnect()
         }
         this.ws.onerror = (error: Error) => {
+            console.log(error)
             this.reconnect()
         }
         this.ws.onopen = () => {
-            // this.onopen();
+            this.onopen();
             // 心跳检测重置
-            // this.heartCheck()
+            this.heartCheck()
         }
         this.ws.onmessage = (event: MessageEvent) => {
             this.handleMessage(event)
-            this.heartCheck();
+            this.heartCheck()
         }
+    }
+
+    send(msg: any) {
+        this.ws.send(msg)
     }
 
     reconnect() {
         if (this.reconnecting || this.reconnectDisabled) return
         this.reconnecting = true
-        // this.onreconnect();
+        this.onReconnect()
         setTimeout(() => {
             this.create()
             this.reconnecting = false
@@ -119,5 +133,5 @@ class WebsocketBeat {
     close() {
         this.reconnectDisabled = true
         this.ws.close()
-    };
+    }
 }
