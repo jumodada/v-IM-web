@@ -76,21 +76,21 @@ const Store = (function () {
         if(!state.ws)return console.error('websocket实例不存在')
         let timestamp = new Date().getTime()
         let {avatar,name,id} = getState('user')
-        let currentMessage = {
+        let message = {
             mine: true,
             avatar,
             username:name,
             timestamp,
             content,
             fromid: id,
-            id: self.chat.id,
-            type: self.chat.type
+            id: state.currentChat.id,
+            type: state.currentChat.type
         };
         let msg = {
             code: 2,
-            message: message
+            message
         };
-        state.ws.send(JSON.stringify(msg))
+        state.ws.ws.send(JSON.stringify(msg))
     }
 
     return {
@@ -102,7 +102,8 @@ const Store = (function () {
         _unshiftChatLists,
         _activeChatLists,
         getWatchFN,
-        setWatchFN
+        setWatchFN,
+        _sendMsg
     }
 })()
 
@@ -115,3 +116,4 @@ export const unshiftChatLists = Store._unshiftChatLists
 export const activeChatLists = Store._activeChatLists
 export const getWatchFN = Store.getWatchFN
 export const setWatchFN = Store.setWatchFN
+export const sendMsg = Store._sendMsg

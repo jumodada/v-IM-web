@@ -39,7 +39,8 @@
         computed: {
             ...mapGetters([
                 'getPage',
-                'activeChat'
+                'activeChat',
+                'IM'
             ])
         },
         data(){
@@ -49,7 +50,8 @@
         },
         methods:{
             onEnter(){
-                console.log(123)
+                this.IM.send(this.chatMsg)
+                this.chatMsg = ''
             }
         },
     }

@@ -65,10 +65,6 @@ export default class WebsocketBeat {
         }
     }
 
-    send(msg: any) {
-        this.ws.send(msg)
-    }
-
     reconnect() {
         if (this.reconnecting || this.reconnectDisabled) return
         this.reconnecting = true
