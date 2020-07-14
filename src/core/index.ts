@@ -7,7 +7,7 @@ export default class WebsocketIm {
     token: string
     userInfo: UserInfo
     ws: any
-    watcherAPI:any
+    watcher = watcherAPI
     constructor(url: string, token: string, userInfo: UserInfo) {
         this.url = url
         this.token = token
@@ -29,7 +29,6 @@ export default class WebsocketIm {
             _t.ws.create()
         }
     }
-    watcher = watcherAPI
 
     addChatList(data:any) {
         unshiftChatLists(data)

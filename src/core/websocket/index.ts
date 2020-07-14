@@ -40,43 +40,10 @@ export default class WebsocketBeat {
     }
 
     handleMessage(event: MessageEvent) {
-        let data = event.data;
-        console.log(event)
+        let {data} = event;
         let sendInfo = JSON.parse(data);
-        // 真正的消息类型
-        let currentChatID = getState('currentChat').id
-        if (sendInfo.code === 2) {
-            let message = sendInfo.message;
-            // 如果图片不带域名，加上域名
-            if (message.avatar && message.avatar.indexOf("http") === -1) {
-                message.avatar = getState('url') + message.avatar
-            }
-            message.timestamp = formatDateTime(new Date(message.timestamp))
-            // 发送给个人
-            if (message.type === 0) {
-                // 接受人是当前的聊天窗口
-                if (
-                    String(message.fromid) === String(currentChatID)
-                ) {
-                    addMessage(message)
-                } else {
-                    setUnReadCount(message)
-                    addUnreadMessage(message)
-                }
-            } else if (message.type === 1) {
-                // message.avatar = self.$store.state.chatMap.get(message.id);
-                // 接受人是当前的聊天窗口
-                if (String(message.id) === String(currentChatID)) {
-                    if (String(message.fromid) !== currentChatID) {
-                        addMessage(message);
-                    }
-                } else {
-                    setUnReadCount(message)
-                    addUnreadMessage(message)
-                }
-            }
-            setLastMessage(message)
-        }
+        console.log(sendInfo)
+
     }
 
     eventListener() {
