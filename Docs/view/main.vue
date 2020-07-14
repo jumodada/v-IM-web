@@ -12,9 +12,15 @@
     import boxContent  from '../components/content'
     import searchBox from '../components/search-box'
     import axios from 'axios'
+    import {mapGetters} from 'vuex'
     export default {
         name: "Main",
         components:{slider,boxContent,searchBox},
+        computed:{
+          ...mapGetters([
+              'IM'
+          ])
+        },
         mounted() {
             this.getToken()
         },
@@ -49,10 +55,10 @@
                 data.append('access_token',this.token)
                 axios.post('http://127.0.0.1:8080/api/user/init',data).then(res=>{
                     let {data} = res
-                    console.log(data)
                     this.$store.commit('setFriend',data.friends)
                     this.$store.commit('setGroups',data.groups)
                     this.$store.commit('setPage','1')
+                    this.IM.setUser(data.me)
                 })
             }
         }

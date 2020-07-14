@@ -4,7 +4,7 @@ export interface State {
     url:string
     token:string
     user: any
-    websocket: any
+    ws: any
     // 内存中的聊天记录
     messageListMap: typeof mapInstance
     // 聊天群的映射 id->chat
@@ -26,7 +26,7 @@ export type StateKeys =
     'url'|
     'token'|
     'user'|
-    'websocket'|
+    'ws'|
     'messageListMap'|
     'chatMap'|
     'messageList'|

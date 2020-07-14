@@ -62,16 +62,33 @@ const Store = (function () {
         state.chatList = copy
     }
 
-    function _setUnReadCount(message: IMMessage) {
-
+    function _activeChatLists(data:any) {
+        let idx = state.chatList.findIndex(list=>list.id===data.id)
+        if(idx===-1){
+            _unshiftChatLists(data)
+        }
+        state.chatList.forEach((list,index)=>list._isActive = index===idx)
     }
 
-    function _addUnreadMessage(message: IMMessage) {
-
-    }
-
-    function _setLastMessage(message:IMMessage) {
-
+    function _sendMsg(content:string) {
+        if(!state.ws)return console.error('websocket实例不存在')
+        let timestamp = new Date().getTime()
+        let {avatar,name,id} = getState('user')
+        let currentMessage = {
+            mine: true,
+            avatar,
+            username:name,
+            timestamp,
+            content,
+            fromid: id,
+            id: self.chat.id,
+            type: self.chat.type
+        };
+        let msg = {
+            code: 2,
+            message: message
+        };
+        state.ws.send(JSON.stringify(msg))
     }
 
     return {
@@ -80,10 +97,8 @@ const Store = (function () {
         _setState,
         _updateLocalStore,
         _addMessage,
-        _setUnReadCount,
-        _addUnreadMessage,
-        _setLastMessage,
         _unshiftChatLists,
+        _activeChatLists,
         getWatchFN,
         setWatchFN
     }
@@ -94,9 +109,7 @@ export const getState = Store._getState
 export const setState = Store._setState
 export const updateLocalState = Store._updateLocalStore
 export const addMessage = Store._addMessage
-export const setUnReadCount = Store._setUnReadCount
-export const addUnreadMessage = Store._addUnreadMessage
-export const setLastMessage = Store._setLastMessage
 export const unshiftChatLists = Store._unshiftChatLists
+export const activeChatLists = Store._activeChatLists
 export const getWatchFN = Store.getWatchFN
 export const setWatchFN = Store.setWatchFN

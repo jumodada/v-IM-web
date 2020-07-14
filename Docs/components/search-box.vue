@@ -1,7 +1,7 @@
 <template>
     <div class="search-box">
         <ul  class="search-box-lists">
-            <li :class="{active:index===activeIndex}" @click="toChat(list,index)" v-for="(list,index) in boxLists">
+            <li :class="{active:list._isActive}" @click="toChat(list)" v-for="list in boxLists">
                 <img width="30px" :src="`http://127.0.0.1:8080${list.avatar}`" alt="">
                 {{list.name}}
             </li>
@@ -20,8 +20,7 @@
         name: "search-box",
         data(){
             return {
-                chatLists:[],
-                activeIndex:0
+                chatLists:[]
             }
         },
         computed:{
@@ -36,13 +35,11 @@
             }
         },
         methods:{
-            toChat(data,index){
-                if(this.getPage==='1'){
-                    this.activeIndex = index
-                }else{
-                    this.IM.addChatList(data)
+            toChat(data){
+                if(this.getPage!=='1'){
                     this.$store.commit('setPage','1')
                 }
+                this.IM.activeChat(data)
                 this.$store.commit('setActiveChat',data)
             },
             watchChatLists(){

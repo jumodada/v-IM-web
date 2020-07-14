@@ -1,4 +1,3 @@
-import {addMessage, addUnreadMessage, getState, setLastMessage, setState, setUnReadCount} from "../../store"
 import {formatDateTime} from "../../utils/formatDateTime"
 
 export default class WebsocketBeat {

@@ -3,7 +3,7 @@ export default class InitState {
     url:string
     token:string
     user: any
-    websocket: any
+    ws: any
     // 内存中的聊天记录
     messageListMap: typeof mapInstance
     // 聊天群的映射 id->chat
