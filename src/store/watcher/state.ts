@@ -19,6 +19,7 @@ export default class InitState {
     flushTokenTimerId: null
     // 群组列表
     chatGroupList: any[]
+
     constructor() {
         this.url = ''
         this.token = ''

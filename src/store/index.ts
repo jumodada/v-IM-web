@@ -69,6 +69,7 @@ const Store = (function () {
             idx = 0
         }
         state.chatList.forEach((list,index)=>list._isActive = index===idx)
+        state.currentChat = data
     }
 
     function _sendMsg(content:string) {

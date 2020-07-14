@@ -1,7 +1,7 @@
 <template>
     <div class="content" >
         <div class="content-header">
-
+            {{activeChat.name}}
         </div>
         <el-divider content-position="center"></el-divider>
         <div class="content-chat-box">
@@ -39,6 +39,7 @@
         computed: {
             ...mapGetters([
                 'getPage',
+                'activeChat'
             ])
         },
         data(){
@@ -50,7 +51,7 @@
             onEnter(){
                 console.log(123)
             }
-        }
+        },
     }
 </script>
 

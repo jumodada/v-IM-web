@@ -48,8 +48,11 @@ export default class WebsocketIm {
         activeChatLists(data)
     }
 
-    getChatList(): any[] {
+    getChatLists(): any[] {
         return getState('chatList')
+    }
+    getCurrentChat(){
+        return getState('currentChat')
     }
     getFriends(){
         return getState('userFriendList')||[]

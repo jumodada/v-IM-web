@@ -44,8 +44,9 @@
             },
             watchIM(){
                 this.IM.watcher.chatList((val)=>this.chatLists = val)
-                this.IM.watcher.friendsList((val)=>this.friendLists = val)
-                this.IM.watcher.groupLists((val)=>this.groupLists = val)
+                this.IM.watcher.friendsList(val=>this.friendLists = val)
+                this.IM.watcher.groupLists(val=>this.groupLists = val)
+                this.IM.watcher.currentChat(val=>  this.$store.commit('setActiveChat',val))
             }
         },
         mounted() {

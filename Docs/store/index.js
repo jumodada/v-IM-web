@@ -5,12 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        im:null,
-        page: '1'
+        im: null,
+        page: '1',
+        activeChat: {}
     },
     getters: {
         IM: state => state.im,
         getPage: state => state.page,
+        activeChat: state => state.activeChat
     },
     mutations: {
         setPage(state, data) {
@@ -18,6 +20,9 @@ export default new Vuex.Store({
         },
         setIM(state, data) {
             state.im = data
+        },
+        setActiveChat(state, data) {
+            state.activeChat = data
         }
 
     }
