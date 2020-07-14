@@ -1,9 +1,9 @@
 <template>
     <div class="slider">
         <img style="width: 60px;margin: 0" src="http://127.0.0.1:8080/img/user (3).png" alt="">
-        <el-menu  background-color="#545c64"
-                  text-color="#fffff"
-                  active-text-color="#ffd04b" @select="handleSelect" class="el-menu-vertical-demo" :collapse="true">
+        <el-menu background-color="#545c64"
+                 text-color="#fffff"
+                 active-text-color="#ffd04b" @select="handleSelect" class="el-menu-vertical-demo" :collapse="true">
             <el-menu-item index="1">
                 <i class="el-icon-s-comment"></i>
                 <span slot="title">聊天</span>
@@ -23,9 +23,9 @@
 <script>
     export default {
         name: "slider",
-        methods:{
-            handleSelect(key){
-                this.$store.commit('setPage',key)
+        methods: {
+            handleSelect(key) {
+                this.$store.commit('setPage', key)
             }
         }
     }
@@ -34,15 +34,17 @@
 <style lang="scss">
     .slider {
         background: #545c64;
-        height:100vh;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
-        ul{
-            height:100vh;
+
+        ul {
+            height: 100vh;
         }
     }
-    .el-menu{
+
+    .el-menu {
         border: none !important;
     }
 </style>

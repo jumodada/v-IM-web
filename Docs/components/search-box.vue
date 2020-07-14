@@ -53,10 +53,12 @@
             }
         },
         mounted() {
-            this.watchChatLists()
+
         },
         watch:{
-
+            IM(){
+                this.watchChatLists()
+            }
         }
     }
 </script>

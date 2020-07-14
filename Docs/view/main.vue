@@ -17,8 +17,6 @@
         components:{slider,boxContent,searchBox},
         mounted() {
             this.getToken()
-            this.IMInit()
-            this.getUserData()
         },
         data(){
             return {
@@ -27,25 +25,28 @@
         },
         methods:{
             getToken(){
-                axios.post('http://127.0.0.1:8080/oauth/token',{
-                    client_id: 'v-client',
-                    client_secret: 'v-client-ppp',
-                    grant_type: 'password',
-                    scope: 'select',
-                    username: 'wangwu',
-                    password: 123456
-                }).then(res=>{
-                    console.log(res)
+                let data = new FormData()
+                data.append('client_id','v-client')
+                data.append('client_secret','v-client-ppp')
+                data.append('grant_type','password')
+                data.append('scope','select')
+                data.append('username','wangwu')
+                data.append('password','123456')
+                axios.post('http://127.0.0.1:8080/oauth/token',data).then(res=>{
+                    let {access_token} = res.data
+                    this.token = access_token
+                    this.IMInit()
+                    this.getUserData()
                 })
             },
             IMInit(){
-                let ke = new IM('ws://127.0.0.1:9326','7cd9ba2c-22e7-4df5-ab29-33fbe8e989ed',{friends:{},me:{},groups:{}})
+                let ke = new IM('ws://127.0.0.1:9326',this.token,{friends:{},me:{},groups:{}})
                 this.$store.commit('setIM',ke)
                 ke()
             },
             getUserData(){
                 let data = new FormData()
-                data.append('access_token','7cd9ba2c-22e7-4df5-ab29-33fbe8e989ed')
+                data.append('access_token',this.token)
                 axios.post('http://127.0.0.1:8080/api/user/init',data).then(res=>{
                     let {data} = res
                     console.log(data)
