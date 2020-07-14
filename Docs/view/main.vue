@@ -46,7 +46,7 @@
                 })
             },
             IMInit(){
-                let ke = new IM('ws://127.0.0.1:9326',this.token,{friends:{},me:{},groups:{}})
+                let ke = new IM('ws://127.0.0.1:9326',this.token)
                 this.$store.commit('setIM',ke)
                 ke()
             },
@@ -55,10 +55,8 @@
                 data.append('access_token',this.token)
                 axios.post('http://127.0.0.1:8080/api/user/init',data).then(res=>{
                     let {data} = res
-                    this.$store.commit('setFriend',data.friends)
-                    this.$store.commit('setGroups',data.groups)
                     this.$store.commit('setPage','1')
-                    this.IM.setUser(data.me)
+                    this.IM.init(data)
                 })
             }
         }

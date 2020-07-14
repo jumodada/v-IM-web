@@ -13,21 +13,22 @@
     import {mapGetters} from 'vuex'
     const listsName = {
         '1':'chatLists',
-        '2':'getFriends',
-        '3':'getGroups',
+        '2':'friendLists',
+        '3':'groupLists',
     }
     export default {
         name: "search-box",
         data(){
             return {
-                chatLists:[]
+                chatLists:[],
+                friendLists:[],
+                groupLists:[],
+
             }
         },
         computed:{
             ...mapGetters([
-                'getGroups',
                 'getPage',
-                'getFriends',
                 'IM'
             ]),
             boxLists(){
@@ -40,16 +41,11 @@
                     this.$store.commit('setPage','1')
                 }
                 this.IM.activeChat(data)
-                this.$store.commit('setActiveChat',data)
             },
-            watchChatLists(){
-                this.$nextTick(()=>{
-                    this.chatLists = this.IM.getChatList()
-                    this.IM.watcher.chatList((val)=>{
-                        this.chatLists = val
-                        console.log(this.chatLists)
-                    })
-                })
+            watchIM(){
+                this.IM.watcher.chatList((val)=>this.chatLists = val)
+                this.IM.watcher.friendsList((val)=>this.friendLists = val)
+                this.IM.watcher.groupLists((val)=>this.groupLists = val)
             }
         },
         mounted() {
@@ -57,7 +53,7 @@
         },
         watch:{
             IM(){
-                this.watchChatLists()
+                this.watchIM()
             }
         }
     }

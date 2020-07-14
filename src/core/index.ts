@@ -14,13 +14,21 @@ export default class WebsocketIm {
         this.url = url
         this.token = token
         this.userInfo = userInfo
-        this.init()
+        this._init()
     }
 
-    init() {
+    private _init() {
         updateLocalState()
         setState('token', this.token)
         setState('url', this.url)
+    }
+    init(userInfo:any){
+        let {me,friends,groups} = userInfo
+        friends.forEach((friend:any)=>{friend.type= '0'})
+        groups.forEach((group:any)=>{group.type= '1'})
+        setState('user', me)
+        setState('chatGroupList', groups)
+        setState('userFriendList', friends)
     }
 
     create(url: string, token: string) {
@@ -43,10 +51,13 @@ export default class WebsocketIm {
     getChatList(): any[] {
         return getState('chatList')
     }
-
-    setUser(data: any) {
-        setState('user', data)
+    getFriends(){
+        return getState('userFriendList')||[]
     }
+    getGroups(){
+        return getState('chatGroupList')||[]
+    }
+
 
     send(data: any) {
 

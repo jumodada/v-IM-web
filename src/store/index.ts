@@ -66,6 +66,7 @@ const Store = (function () {
         let idx = state.chatList.findIndex(list=>list.id===data.id)
         if(idx===-1){
             _unshiftChatLists(data)
+            idx = 0
         }
         state.chatList.forEach((list,index)=>list._isActive = index===idx)
     }

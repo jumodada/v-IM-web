@@ -28,21 +28,24 @@ export function watchCurrentChat() {
 // todo
 }
 
-export function watchChatList(val:any) {
-    let newVal = Object.assign({},val)
+export function watchChatList(val: any) {
+    let newVal = Object.assign({}, val)
     getWatchFN('watchChatList')(newVal)
 }
 
-export function watchUserFriendList() {
-    // todo
+export function watchUserFriendList(val: any) {
+    val = val[0].userList
+    let newVal = Object.assign({}, val)
+    getWatchFN('watchUserFriendList')(newVal)
 }
 
 export function watchFlushTokenTimerId() {
     // todo
 }
 
-export function watchChatGroupList() {
-    // todo
+export function watchChatGroupList(val:any) {
+    let newVal = Object.assign({}, val)
+    getWatchFN('watchChatGroupList')(newVal)
 }
 
 

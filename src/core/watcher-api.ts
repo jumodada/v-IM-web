@@ -25,13 +25,13 @@ export default {
     currentChat(fn:any){
         setWatchFN('watchCurrentChat',fn)
     },
-    userFriendList(fn:any){
+    friendsList(fn:any){
         setWatchFN('watchUserFriendList',fn)
     },
     flushTokenTimerId(fn:any){
         setWatchFN('watchFlushTokenTimerId',fn)
     },
-    chatGroupList(fn:any){
+    groupLists(fn:any){
         setWatchFN('watchChatGroupList',fn)
     },
 }
