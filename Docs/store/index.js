@@ -8,13 +8,15 @@ export default new Vuex.Store({
         im:null,
         page: '1',
         groups:[],
-        friends:[]
+        friends:[],
+        activeChat:{}
     },
     getters: {
         IM: state => state.im,
         getPage: state => state.page,
         getGroups: state => state.groups,
         getFriends: state => state.friends[0].userList,
+        activeChat: state => state.activeChat
     },
     mutations: {
         setPage(state, data) {
@@ -29,6 +31,9 @@ export default new Vuex.Store({
         setIM(state, data) {
             state.im = data
         },
+        setActiveChat(state,data){
+            state.activeChat = data
+        }
 
     }
 })
