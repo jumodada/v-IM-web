@@ -55,6 +55,7 @@
                 data.append('access_token',this.token)
                 axios.post('http://127.0.0.1:8080/api/user/init',data).then(res=>{
                     let {data} = res
+                    this.$store.commit('setUser',data.me)
                     this.$store.commit('setPage','1')
                     this.IM.init(data)
                 })

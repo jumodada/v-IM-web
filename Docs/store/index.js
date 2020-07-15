@@ -7,11 +7,13 @@ export default new Vuex.Store({
     state: {
         im: null,
         page: '1',
+        user:{},
         activeChat: {}
     },
     getters: {
         IM: state => state.im,
         getPage: state => state.page,
+        user:state => state.user,
         activeChat: state => state.activeChat
     },
     mutations: {
@@ -23,6 +25,9 @@ export default new Vuex.Store({
         },
         setActiveChat(state, data) {
             state.activeChat = data
+        },
+        setUser(state,data){
+            state.user = data
         }
 
     }

@@ -78,6 +78,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
+    "dayjs": "^1.8.29",
     "url-loader": "^4.1.0"
   }
 }
