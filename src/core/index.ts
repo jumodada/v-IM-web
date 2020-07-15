@@ -1,5 +1,5 @@
 import {UserInfo} from "../types/user"
-import {updateLocalState, setState, unshiftChatLists, getState, activeChatLists, sendMsg} from "../store"
+import {updateLocalState, setState, unshiftChatLists, getState, activeChatLists, sendMsg, addChat} from "../store"
 import WebsocketBeat from "./websocket"
 import watcherAPI from './watcher-api'
 
@@ -44,9 +44,14 @@ export default class WebsocketIm {
     addChatList(data: any) {
         unshiftChatLists(data)
     }
-
+    addCurrentChat(msg:string){
+        addChat(msg)
+    }
+    onmessage(data:any){
+        setState('onMessage',data)
+    }
     activeChat(data: any) {
-        activeChatLists(data)
+        return activeChatLists(data)
     }
     getUser(){
         return getState('user')

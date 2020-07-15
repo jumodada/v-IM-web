@@ -19,7 +19,7 @@ export default class InitState {
     flushTokenTimerId: null
     // 群组列表
     chatGroupList: any[]
-
+    onMessage:any
     constructor() {
         this.url = ''
         this.token = ''
@@ -29,5 +29,6 @@ export default class InitState {
         this.messageList = []
         this.chatMap = new Map()
         this.messageListMap = new Map()
+        this.onMessage = new Function()
     }
 }

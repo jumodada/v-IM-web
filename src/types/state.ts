@@ -19,7 +19,8 @@ export interface State {
     // 刷新token 定时器
     flushTokenTimerId: null
     // 群组列表
-    chatGroupList: any[]
+    chatGroupList: any[],
+    onMessage:any
 }
 
 export type StateKeys =
@@ -34,4 +35,5 @@ export type StateKeys =
     'chatList'|
     'userFriendList'|
     'flushTokenTimerId'|
-    'chatGroupList'
+    'chatGroupList'|
+    'onMessage'

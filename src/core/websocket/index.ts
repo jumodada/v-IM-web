@@ -1,4 +1,5 @@
 import {formatDateTime} from "../../utils/formatDateTime"
+import {getState} from "../../store";
 
 export default class WebsocketBeat {
     url: string
@@ -39,10 +40,8 @@ export default class WebsocketBeat {
     }
 
     handleMessage(event: MessageEvent) {
-        let {data} = event;
-        let sendInfo = JSON.parse(data);
-        console.log(sendInfo)
-
+        if(event.data==='{"code":0}')return
+        getState('onMessage')(event)
     }
 
     eventListener() {
