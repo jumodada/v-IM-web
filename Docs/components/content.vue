@@ -5,7 +5,19 @@
         </div>
         <el-divider content-position="center"></el-divider>
         <div class="content-chat-box">
-            {{currentChatLists}}
+            <div class="chatLists">
+                <li :class="{right:user.id===list.fromid}" v-for="list in currentChatLists">
+                    <img :src="`${list.avatar}`">
+                    <div class="">
+                        <div class="header">
+                            {{transformDate(list.timestamp)}}
+                        </div>
+                        <div class="content">
+                            {{list.content}}
+                        </div>
+                    </div>
+                </li>
+            </div>
         </div>
         <div class="content-send-box">
             <div class="content-send-box-toolbar">
