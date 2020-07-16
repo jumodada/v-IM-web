@@ -1,5 +1,5 @@
 import {formatDateTime} from "../../utils/formatDateTime"
-import {getState} from "../../store";
+import {getState, updateLocalState} from "../../store";
 
 export default class WebsocketBeat {
     url: string
@@ -41,7 +41,27 @@ export default class WebsocketBeat {
 
     handleMessage(event: MessageEvent) {
         if(event.data==='{"code":0}')return
+        let data = JSON.parse(event.data).message
         getState('onMessage')(event)
+        let watcher = getState('onCurrentChat')
+        let lists = data.type==='1'?getState('chatGroupList'):getState('userFriendList').reduce((concatLists:any,list:any)=>{
+            return concatLists.concat(list.userList)
+        },[])
+        let isExist = false
+        let findList = lists.find((list:any)=>{
+            if(list.timestamp===data.timestamp) isExist = true
+            return list.id===(data.type==='1'?data.id:data.fromid)
+        })
+        console.log(data)
+        if(isExist)return console.warn('已存在')
+        if(findList){
+            if(!findList.chatLists)findList.chatLists = []
+            findList.chatLists.push(data)
+            if(findList.id===getState('currentChat').id){
+                watcher(findList.chatLists  ,findList.id)
+            }
+            updateLocalState()
+        }
     }
 
     eventListener() {

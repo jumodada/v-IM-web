@@ -71,6 +71,8 @@ const Store = (function () {
         state.chatList.forEach((list, index) => list._isActive = index === idx)
         state.currentChat = data
         if(!data.chatLists)data.chatLists = []
+        console.log(data)
+        state.onCurrentChat(data.chatLists,data.id)
         return data.chatLists
     }
 
@@ -99,6 +101,9 @@ const Store = (function () {
     function addChat(data:any) {
         if(!state.currentChat)return console.error('当前聊天框不存在')
         state.currentChat.chatLists.push(data)
+        let lists = state.currentChat.chatLists
+        updateLocalState()
+        state.onCurrentChat(lists,state.currentChat.id)
     }
 
     return {

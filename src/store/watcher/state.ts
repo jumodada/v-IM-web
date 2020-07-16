@@ -20,6 +20,7 @@ export default class InitState {
     // 群组列表
     chatGroupList: any[]
     onMessage:any
+    onCurrentChat:any
     constructor() {
         this.url = ''
         this.token = ''
@@ -30,5 +31,6 @@ export default class InitState {
         this.chatMap = new Map()
         this.messageListMap = new Map()
         this.onMessage = new Function()
+        this.onCurrentChat = new Function()
     }
 }

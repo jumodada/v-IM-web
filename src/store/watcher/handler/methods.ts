@@ -35,7 +35,6 @@ export function watchChatList(val: any) {
 }
 
 export function watchUserFriendList(val: any) {
-    val = val[0].userList
     let newVal = Object.assign({}, val)
     getWatchFN('watchUserFriendList')(newVal)
 }

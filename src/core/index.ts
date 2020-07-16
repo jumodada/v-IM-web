@@ -25,7 +25,9 @@ export default class WebsocketIm {
 
     init(userInfo: any) {
         let {me, friends, groups} = userInfo
-        friends[0].userList.forEach((friend: any) => friend.type = '0')
+        friends.forEach((friend:any)=>{
+            friend.userList.forEach((friend: any) => friend.type = '0')
+        })
         groups.forEach((group: any) =>group.type = '1')
         setState('user', me)
         setState('chatGroupList', groups)
@@ -49,6 +51,9 @@ export default class WebsocketIm {
     }
     onmessage(data:any){
         setState('onMessage',data)
+    }
+    onCurrentChat(fn:any){
+        setState('onCurrentChat',fn)
     }
     activeChat(data: any) {
         return activeChatLists(data)

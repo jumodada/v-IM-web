@@ -5,7 +5,7 @@
         </div>
         <el-divider content-position="center"></el-divider>
         <div class="content-chat-box">
-
+            {{currentChatLists}}
         </div>
         <div class="content-send-box">
             <div class="content-send-box-toolbar">
@@ -71,7 +71,8 @@
                 chatMsg: '',
                 drawerShow: false,
                 drawerLoading: false,
-                chatLists: []
+                chatLists: [],
+                currentChatLists: [],
             }
         },
         methods: {
@@ -100,8 +101,19 @@
             onEnter() {
                 this.IM.send(this.chatMsg)
                 this.chatMsg = ''
+            },
+            watchIM(){
+                this.IM.onCurrentChat((list)=>{
+                    console.log(list)
+                    this.currentChatLists = list
+                })
             }
         },
+        watch:{
+            IM(){
+                this.watchIM()
+            }
+        }
     }
 </script>
 
