@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div v-if="activeChat.name" class="content">
         <div class="content-header">
             {{activeChat.name}}
         </div>
@@ -22,7 +22,15 @@
         <div class="content-send-box">
             <div class="content-send-box-toolbar">
                 <span class="icon-group">
-                    <f-icon font-size="23px" name="xiaolian"></f-icon>
+                      <el-popover
+                              placement="top-start"
+                              width="200"
+                              trigger="click">
+                           <div>
+
+                           </div>
+     <f-icon slot="reference" font-size="23px" name="xiaolian"></f-icon>
+  </el-popover>
                     <f-icon font-size="23px" name="tupian"></f-icon>
                     <f-icon font-size="23px" name="wenjian"></f-icon>
                 </span>
@@ -46,7 +54,7 @@
                 v-loading="drawerLoading"
                 direction="rtl"
         >
-            <div class="chatLists">
+            <div class="chatLists" style="height: calc(100vh - 100px)">
                 <li :class="{right:user.id===list.fromid}" v-for="list in chatLists">
                     <img :src="`http://127.0.0.1:8080${list.avatar}`">
                     <div class="">
@@ -111,18 +119,18 @@
                 }).finally(() => this.drawerLoading = false)
             },
             onEnter() {
+                if(!this.chatMsg.length===0)return
                 this.IM.send(this.chatMsg)
                 this.chatMsg = ''
             },
-            watchIM(){
-                this.IM.onCurrentChat((list)=>{
-                    console.log(list)
+            watchIM() {
+                this.IM.onCurrentChat((list) => {
                     this.currentChatLists = list
                 })
             }
         },
-        watch:{
-            IM(){
+        watch: {
+            IM() {
                 this.watchIM()
             }
         }
@@ -143,6 +151,7 @@
 
         &-chat-box {
             height: calc(100vh - 300px);
+            overflow: auto;
             border-bottom: 1px solid #DCDFE6;
         }
 
@@ -180,7 +189,6 @@
 
         .chatLists {
             overflow: auto;
-            height: calc(100vh - 100px);
             padding: 5px 15px;
 
             li {
@@ -208,7 +216,7 @@
                     font-size: 14px;
                     border-radius: 6px;
                     position: relative;
-
+                    min-height: 31px;
                     &::after {
                         content: "";
                         position: absolute;
