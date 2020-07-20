@@ -49,13 +49,14 @@ export default class WebsocketBeat {
         },[])
         let isExist = false
         let findList = lists.find((list:any)=>{
-            if(list.timestamp===data.timestamp) isExist = true
             return list.id===(data.type==='1'?data.id:data.fromid)
         })
-        console.log(data)
-        if(isExist)return console.warn('已存在')
         if(findList){
             if(!findList.chatLists)findList.chatLists = []
+            findList.chatLists.forEach((list:any)=>{
+                if(list.timestamp===data.timestamp) isExist = true
+            })
+            if(isExist)return
             findList.chatLists.push(data)
             if(findList.id===getState('currentChat').id){
                 watcher(findList.chatLists  ,findList.id)

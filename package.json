@@ -2,12 +2,13 @@
   "name": "v-im-web",
   "version": "1.0.0",
   "description": "一个web端的聊天工具插件",
-  "main": "index.js",
+  "main": "dist/imWeb.umd.js",
+  "module": "dist/imWeb.es5.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --config build/webpack.demo.config.js",
     "prebp": "rimraf dist",
-    "build": "tsc --module commonjs && rollup -c build/rollup.config.ts"
+    "build": "tsc --module commonjs && rollup -c build/rollup.config.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
