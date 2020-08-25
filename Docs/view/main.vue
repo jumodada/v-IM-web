@@ -38,7 +38,7 @@
                 data.append('scope','select')
                 data.append('username','wangwu')
                 data.append('password','123456')
-                axios.post('http://127.0.0.1:8080/oauth/token',data).then(res=>{
+                axios.post('http://192.168.1.154:9987/oauth/token',data).then(res=>{
                     let {access_token} = res.data
                     this.token = access_token
                     this.IMInit()
@@ -46,14 +46,14 @@
                 })
             },
             IMInit(){
-                let ke = new IM('ws://127.0.0.1:9326',this.token)
+                let ke = new IM('ws://192.168.1.154:9326/',this.token)
                 this.$store.commit('setIM',ke)
                 ke()
             },
             getUserData(){
                 let data = new FormData()
                 data.append('access_token',this.token)
-                axios.post('http://127.0.0.1:8080/api/user/init',data).then(res=>{
+                axios.post('http://192.168.1.154:9987/api/user/init',data).then(res=>{
                     let {data} = res
                     this.$store.commit('setUser',data.me)
                     this.$store.commit('setPage','1')

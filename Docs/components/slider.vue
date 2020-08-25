@@ -1,6 +1,6 @@
 <template>
     <div class="slider">
-        <img style="width: 60px;margin: 0" src="http://127.0.0.1:8080/img/user (3).png" alt="">
+        <img style="width: 60px;margin: 0" src="http://192.168.1.154:9987/img/user (3).png" alt="">
         <el-menu background-color="#545c64"
                  text-color="#fffff"
                  active-text-color="#ffd04b" @select="handleSelect" class="el-menu-vertical-demo" :collapse="true">

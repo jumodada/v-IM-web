@@ -112,7 +112,7 @@
                 data.append('pageNo', 1)
                 data.append('access_token', token)
                 this.drawerLoading = true
-                axios.post('http://127.0.0.1:8080/api/message/list', data).then(res => {
+                axios.post('http://192.168.1.154:9987/api/message/list', data).then(res => {
                     let {messageList} = res.data
                     this.chatLists = messageList.reverse()
                     console.log(messageList)
