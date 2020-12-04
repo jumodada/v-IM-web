@@ -29,7 +29,7 @@
     "core-js": "^3.6.4",
     "css-loader": "^3.2.0",
     "element-ui": "^2.13.2",
-    "highlight.js": "^9.16.2",
+    "highlight.js": "^10.4.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^25.0.0",
